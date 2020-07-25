@@ -20,9 +20,7 @@ class UI {
     }
     // delete function
     deleteBook(target) {
-        if (target.className === 'delete') {
-            target.parentElement.parentElement.remove();
-        }
+        target.parentElement.parentElement.remove();
     }
     // clear fields function
     clearFields() {
@@ -93,14 +91,14 @@ class Store {
 
 // Validate Input
 document.querySelector('#isbn').addEventListener('input', function () {
-    // validate input
+    // validate input and allow a maximum of 13 digits
     $(this).val(function (index, value) {
         console.log(value);
         return value.replace(/[^0-9]+/g, '').replace(/^(\d{0,13})\d*$/, '$1');
     });
 });
 
-// Remove Red Border Line When Input Field Is In Focus
+// Remove Red Border Line When Title Field Is In Focus
 document.querySelector('#title').addEventListener('focus', function () {
     document.querySelector('#title').style.border = '1px solid #d1d1d1';
     if (document.getElementsByClassName('error').length > 0) {
@@ -108,9 +106,17 @@ document.querySelector('#title').addEventListener('focus', function () {
     }
 });
 
-// Remove Red Border Line When Input Field Is In Focus
+// Remove Red Border Line When Author Field Is In Focus
 document.querySelector('#author').addEventListener('focus', function () {
     document.querySelector('#author').style.border = '1px solid #d1d1d1';
+    if (document.getElementsByClassName('error').length > 0) {
+        UI.removeAlert('error');
+    }
+});
+
+// Remove Red Border Line When ISBN Field Is In Focus
+document.querySelector('#isbn').addEventListener('focus', function () {
+    document.querySelector('#isbn').style.border = '1px solid #d1d1d1';
     if (document.getElementsByClassName('error').length > 0) {
         UI.removeAlert('error');
     }
@@ -130,21 +136,21 @@ document.querySelector('#book-form').addEventListener('submit', function (e) {
     const ui = new UI();
 
     // validate
-    if (title === '' || author === '') {
+    if (title === '' || author === '' || isbn === '') {
         if (title === '') {
             document.querySelector('#title').style.border = '1px solid red';
         }
         if (author === '') {
             document.querySelector('#author').style.border = '1px solid red';
         }
+        if (isbn === '') {
+            document.querySelector('#isbn').style.border = '1px solid red';
+        }
         if (document.getElementsByClassName('error').length < 1) {
             // error alert
-            UI.showAlert('Please fill in the highlighted fields', 'error');
+            UI.showAlert('Please fill in the highlighted field(s)', 'error');
         }
     } else {
-        if (isbn === '') {
-            book.isbn = 'N/A';
-        }
         // add book to list
         ui.addBook(book);
         // add book to local storage
@@ -164,8 +170,9 @@ document.querySelector('#book-list').addEventListener('click', function (e) {
     // show deleted alert
     if (e.target.className === 'delete') {
         const ui = new UI();
+        // remove book from UI
         ui.deleteBook(e.target);
-        // remove from local storage
+        // remove book from local storage
         Store.removeBookFromLocalStorage(e.target.parentElement.previousElementSibling.textContent);
         UI.showAlert('Book Removed', 'success');
         setTimeout(function () {

@@ -3,10 +3,11 @@
 
 <head>
     <meta charset="UTF-8">
+    <!-- maximum-scale=1 prevents mobile devices from zooming in on input -->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato|Playfair+Display">
-    <title>Book List</title>
+    <title>Book Log</title>
 </head>
 <style>
     .success,
@@ -17,7 +18,7 @@
         text-align: center;
     }
     body {
-        font-family: 'Playfair Display';
+        font-family: 'Lato';
         letter-spacing: .5px;
     }
     .success {background: green;}
@@ -26,7 +27,7 @@
 
 <body>
     <div class="container">
-        <h1 style="text-align: center;">Reading List</h1>
+        <h1 style="text-align: center;">Book Log</h1>
         <form id="book-form">
             <div>
                 <label for="title">Title</label>
@@ -37,7 +38,7 @@
                 <input type="text" id="author" class="u-full-width" autocomplete="off">
             </div>
             <div>
-                <label for="isbn">ISBN <span style="color: grey;">(Optional)</span></label>
+                <label for="isbn">ISBN</label>
                 <!-- adding pattern="[0-9]*" triggers iOS to bring up the keypad  -->
                 <input type="text" id="isbn" class="u-full-width" pattern="[0-9]*">
             </div>
