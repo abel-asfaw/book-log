@@ -91,7 +91,19 @@ class Store {
     }
 }
 
-// Validate Input
+// Validate Author
+document.querySelector('#title').addEventListener('input', function () {
+    // prevent white space in the beginning of input
+    this.value = this.value.replace(/^\s/g, '');
+});
+
+// Validate Author
+document.querySelector('#author').addEventListener('input', function () {
+    // prevent white space in the beginning of input
+    this.value = this.value.replace(/^\s/g, '');
+});
+
+// Validate ISBN
 document.querySelector('#isbn').addEventListener('input', function () {
     // allow only integers and a maximum of 13 digits
     this.value = this.value.replace(/[^0-9]+/g, '').replace(/^(\d{0,13})\d*$/, '$1');
