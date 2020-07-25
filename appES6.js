@@ -95,19 +95,20 @@ class Store {
 document.querySelector('#isbn').addEventListener('input', function () {
     // validate input
     $(this).val(function (index, value) {
-        const numbers = /^[0-9]+$/;
-        if (!value.match(numbers) && value !== '') {
-            // only show alerts if ISBN limit has not been reached
-            if (value.length != 14) {
-                if (document.getElementsByClassName('error').length < 1) {
-                    document.querySelector('#isbn').style.border = '1px solid red';
-                    UI.showAlert('Please enter a number.', 'error');
-                }
-            }
-        } else {
-            UI.removeAlert('error');
-            document.querySelector('#isbn').style.border = '1px solid #d1d1d1';
-        }
+        console.log(value);
+        // const numbers = /^[0-9]+$/;
+        // if (!value.match(numbers) && value !== '') {
+        //     // only show alerts if ISBN limit has not been reached
+        //     if (value.length != 14) {
+        //         if (document.getElementsByClassName('error').length < 1) {
+        //             document.querySelector('#isbn').style.border = '1px solid red';
+        //             UI.showAlert('Please enter a number.', 'error');
+        //         }
+        //     }
+        // } else {
+        //     UI.removeAlert('error');
+        //     document.querySelector('#isbn').style.border = '1px solid #d1d1d1';
+        // }
         return value.replace(/[^0-9]+/g, '').replace(/^(\d{0,13})\d*$/, '$1');
     });
 });
