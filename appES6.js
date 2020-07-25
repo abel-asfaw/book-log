@@ -15,7 +15,7 @@ class UI {
         row.innerHTML = `<td>${book.title}</td>
                         <td>${book.author}</td>
                         <td>${book.isbn}</td>
-                        <td><a href="" style="text-decoration:none;" class="delete">X</a></td>`;
+                        <td><a href="" style="text-decoration:none;" class="delete">x</a></td>`;
         list.appendChild(row);
     }
     // delete function
@@ -96,19 +96,6 @@ document.querySelector('#isbn').addEventListener('input', function () {
     // validate input
     $(this).val(function (index, value) {
         console.log(value);
-        // const numbers = /^[0-9]+$/;
-        // if (!value.match(numbers) && value !== '') {
-        //     // only show alerts if ISBN limit has not been reached
-        //     if (value.length != 14) {
-        //         if (document.getElementsByClassName('error').length < 1) {
-        //             document.querySelector('#isbn').style.border = '1px solid red';
-        //             UI.showAlert('Please enter a number.', 'error');
-        //         }
-        //     }
-        // } else {
-        //     UI.removeAlert('error');
-        //     document.querySelector('#isbn').style.border = '1px solid #d1d1d1';
-        // }
         return value.replace(/[^0-9]+/g, '').replace(/^(\d{0,13})\d*$/, '$1');
     });
 });
@@ -125,22 +112,6 @@ document.querySelector('#title').addEventListener('focus', function () {
 document.querySelector('#author').addEventListener('focus', function () {
     document.querySelector('#author').style.border = '1px solid #d1d1d1';
     if (document.getElementsByClassName('error').length > 0) {
-        UI.removeAlert('error');
-    }
-});
-
-// Remove Red Border Line When Input Field Is In Focus
-document.querySelector('#isbn').addEventListener('focus', function () {
-    document.querySelector('#isbn').style.border = '1px solid #d1d1d1';
-    if (document.getElementsByClassName('error').length > 0) {
-        UI.removeAlert('error');
-    }
-});
-
-// Remove Alert When Input Field Is Not In Focus
-document.querySelector('#isbn').addEventListener('blur', function () {
-    if (document.getElementsByClassName('error').length > 0) {
-        document.querySelector('#isbn').style.border = '1px solid #d1d1d1';
         UI.removeAlert('error');
     }
 });
@@ -166,8 +137,10 @@ document.querySelector('#book-form').addEventListener('submit', function (e) {
         if (author === '') {
             document.querySelector('#author').style.border = '1px solid red';
         }
-        // error alert
-        UI.showAlert('Please fill in highlighted fields', 'error');
+        if (document.getElementsByClassName('error').length < 1) {
+            // error alert
+            UI.showAlert('Please fill in the highlighted fields', 'error');
+        }
     } else {
         if (isbn === '') {
             book.isbn = 'N/A';
