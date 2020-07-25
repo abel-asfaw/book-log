@@ -136,6 +136,11 @@ document.querySelector('#book-form').addEventListener('submit', function (e) {
 
     // validate
     if (title === '' || author === '' || isbn === '') {
+        // error alert
+        if (document.getElementsByClassName('error').length < 1) {
+            UI.showAlert('Please fill in the highlighted field(s)', 'error');
+        }
+        // highlight borders red
         if (title === '') {
             document.querySelector('#title').style.border = '1px solid red';
         }
@@ -144,10 +149,6 @@ document.querySelector('#book-form').addEventListener('submit', function (e) {
         }
         if (isbn === '') {
             document.querySelector('#isbn').style.border = '1px solid red';
-        }
-        if (document.getElementsByClassName('error').length < 1) {
-            // error alert
-            UI.showAlert('Please fill in the highlighted field(s)', 'error');
         }
     } else {
         // add book to list
