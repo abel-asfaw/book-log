@@ -76,11 +76,13 @@ class Store {
         books.push(book);
         localStorage.setItem('books', JSON.stringify(books));
     }
-    static removeBookFromLocalStorage(isbn) {
+    static removeBookFromLocalStorage(book) {
         const books = Store.getBooksFromLocalStorage();
         // find book to be deleted by isbn and delete
         for (let i = 0; i < books.length; i++) {
-            if (books[i].isbn === isbn) {
+            if (books[i].title === book.title &&
+                books[i].author === book.author &&
+                books[i].isbn === book.isbn) {
                 books.splice(i, 1);
                 break;
             }
@@ -91,11 +93,8 @@ class Store {
 
 // Validate Input
 document.querySelector('#isbn').addEventListener('input', function () {
-    // validate input and allow a maximum of 13 digits
-    $(this).val(function (index, value) {
-        console.log(value);
-        return value.replace(/[^0-9]+/g, '').replace(/^(\d{0,13})\d*$/, '$1');
-    });
+    // allow only integers and a maximum of 13 digits
+    this.value = this.value.replace(/[^0-9]+/g, '').replace(/^(\d{0,13})\d*$/, '$1');
 });
 
 // Remove Red Border Line When Title Field Is In Focus
@@ -173,7 +172,11 @@ document.querySelector('#book-list').addEventListener('click', function (e) {
         // remove book from UI
         ui.deleteBook(e.target);
         // remove book from local storage
-        Store.removeBookFromLocalStorage(e.target.parentElement.previousElementSibling.textContent);
+        const title = (e.target.parentElement.previousElementSibling.previousElementSibling.previousElementSibling.textContent),
+            author = (e.target.parentElement.previousElementSibling.previousElementSibling.textContent),
+            isbn = (e.target.parentElement.previousElementSibling.textContent);
+        Store.removeBookFromLocalStorage(new Book(title, author, isbn));
+        // e.target.parentElement.previousElementSibling.textContent
         UI.showAlert('Book Removed', 'success');
         setTimeout(function () {
             UI.removeAlert('success');
